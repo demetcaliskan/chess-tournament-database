@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/welcome.css">
+  <title>Player</title>
+</head>
+
+<body>
+  <%var opponents = player[0].opponent_details.split(" ")%>
+  <%var opponentCount = opponents.length%>
+    <div class="players-div container d-flex justify-content-center " style="margin-top:70px">
+      <h1><strong><%= player[0].first_name %> <%= player[0].last_name %></strong></h1>
+
+    </div>
+    <div class="players-div container d-flex justify-content-center">
+      <h2>This participant had played with <strong><%=opponentCount%></strong> opponent.</h2>
+
+    </div>
+
+    <div class="players-div container d-flex justify-content-center">
+      <h2>To see this participant's matches in detailed, click below:</h2>
+
+    </div>
+    <div class="players-div container d-flex justify-content-center" style="margin-top:50px">
+      <form action="<%= player[0].player_id %>/<%= player[0].opponent_details %>" method="post">
+        <button class="btn-design btn btn-outline-dark">Match Details</button>
+      </form>
+    </div>
+
+</body>
+
+</html>
