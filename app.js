@@ -6,17 +6,20 @@ const express = require('express')
 var mysql = require('mysql');
 
 const app = express()
+// this variable defines which port will be live in our example it's localhost:3000
 const port = 3000
 var players = [];
 
+// This variable makes sure that we have a connection with our database. We don't have a password set since it was unnecessary.
 var connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'sampleDB',
+  database: 'tigersss',
   multipleStatements: true
 });
 
+// If any error occured during connection to database, it prints error.
 connection.connect(function(error) {
   if (!!error) {
     console.log('Error');
@@ -35,6 +38,7 @@ app.use('/img', express.static(__dirname + 'public/img'))
 app.set('views', './views')
 app.set('view engine', 'ejs')
 
+// This block of codes selects every player from player table, abnd shows it in our ejs file.
 connection.query("SELECT * FROM player", (error, rows, field) => {
   if (!!error) {
     console.log('Error in the query');
@@ -49,11 +53,12 @@ connection.query("SELECT * FROM player", (error, rows, field) => {
     })
   }
 });
-
+// This function sets our view in welcome.
 app.get('/', (req, res) => {
   res.render(__dirname + '/views/welcome.ejs');
 })
-
+// This function selects everything from matches where our wanted result code from macthes match result tables result code.
+// and move's match id equals matches match id.
 app.get('/matches', (req, res) => {
   query1 = "SELECT * FROM matches" +
     " INNER JOIN result ON matches.result_code=result.result_code" +
@@ -77,7 +82,7 @@ app.get('/matches', (req, res) => {
       }
     });
 });
-
+// This block of code gets specific player with selected player id.
 app.post('/:playerId', (req, res) => {
 
   console.log(req.params);
@@ -97,6 +102,8 @@ app.post('/:playerId', (req, res) => {
     }
   });
 })
+// This block of code selects everything from matches where result code equals result tables result code
+// player id, equals player's id, match id's matches tables match id, finnally player id1 and playerid2 equals our players id.
 app.post('/:playerId/:match_id', (req, res) => {
   console.log(req.params);
   match_id = req.params['match_id'];
